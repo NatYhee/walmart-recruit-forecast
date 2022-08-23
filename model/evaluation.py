@@ -14,7 +14,9 @@ def wmae_holiday_weight(
         lambda holiday: 5 if holiday else 1
     )
 
-    evaluation_df["percent_weight_wmae"] = evaluation_df["weight_wmae"]/evaluation_df["weight_wmae"].sum()
+    evaluation_df["percent_weight_wmae"] = (
+        evaluation_df["weight_wmae"] / evaluation_df["weight_wmae"].sum()
+    )
 
     prediction_eval_cols = []
     prediction_eval_results = []
@@ -24,9 +26,11 @@ def wmae_holiday_weight(
         prediction_eval_cols.append(eval_col_name)
 
         evaluation_df[eval_col_name] = (
-            evaluation_df["percent_weight_wmae"] * (evaluation_df[prediction] - evaluation_df[target_col]).abs()
+            evaluation_df["percent_weight_wmae"]
+            * (evaluation_df[prediction] - evaluation_df[target_col]).abs()
         )
-        print(evaluation_df[["Store", "sales", "pred_naive_lag1y", eval_col_name, "percent_weight_wmae"]])
+
+        evaluation_df = evaluation_df[evaluation_df[eval_col_name].notnull()].copy()
         eval_result = evaluation_df[eval_col_name].sum()
         prediction_eval_results.append(eval_result)
 
