@@ -8,5 +8,5 @@ def date_setting(df: pd.DataFrame, date_col: str = "Date"):
     df["year"] = df[date_col].dt.year
 
     df = df.sort_values(by=["Store", date_col], ascending=True)
-    df.set_index(date_col, inplace=True)
+    df.set_index(date_col, inplace=True, drop=False)
     return df
