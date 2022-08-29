@@ -1,10 +1,11 @@
 from typing import Dict
+from copy import deepcopy
 import pandas as pd
 
 
 class Naive_Seasonal_Year_1lag:
     def __init__(self, data: pd.DataFrame, ts_col: str) -> None:
-        self.data = data
+        self.data = deepcopy(data)
         self.ts_col = ts_col
 
     def pred(self, pred_col: str = "pred_naive_lag1y") -> pd.DataFrame:
